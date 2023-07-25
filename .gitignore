@@ -1,0 +1,41 @@
+# Python
+*.pyc
+*.pyo
+*.egg-info/
+__pycache__/
+*.egg
+*.log
+*.pot
+*.db
+*.sqlite
+
+# Virtual environment
+venv/
+*.venv
+*.virtualenv
+*.virtualenvs/
+*.env
+*.envs/
+env/
+env.bak/
+ENV/
+.env
+.env.local
+.env.*.local
+.env.*.local
+.env.*.local
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Other
+*.log
+*.bak
+*.swp
+*.swo
+*.swn
+*.DS_Store
