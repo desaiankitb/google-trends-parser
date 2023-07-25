@@ -9,6 +9,13 @@ def parse_google_trends_rss(url):
     # Define the namespace
     ns = {'ht': 'https://trends.google.com/trends/trendingsearches/daily'}
 
+    # Extract global metadata
+    global_meta_data = {
+        'title': root.find('channel/title').text,
+        'description': root.find('channel/description').text,
+        'link': root.find('channel/link').text
+    }
+
     # Get today's and yesterday's date in IST
     today_ist = datetime.now().strftime('%a, %d %b %Y')
     yesterday_ist = (datetime.now() - timedelta(days=1)).strftime('%a, %d %b %Y')
@@ -22,6 +29,7 @@ def parse_google_trends_rss(url):
         # Process items from yesterday or today (IST)
         if pubDate_ist == today_ist or pubDate_ist == yesterday_ist:
             trend_data = {
+                'global_meta_data': global_meta_data,
                 'title': item.find('title').text,
                 'ht:approx_traffic': item.find('ht:approx_traffic', ns).text if item.find('ht:approx_traffic', ns) is not None else None,
                 'description': item.find('description').text,
