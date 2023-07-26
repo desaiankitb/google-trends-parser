@@ -39,3 +39,6 @@ ENV/
 *.swo
 *.swn
 *.DS_Store
+
+# Config file
+*config.ini
