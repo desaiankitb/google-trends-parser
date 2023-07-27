@@ -1,6 +1,6 @@
 from pymongo import MongoClient
-from google_trends_parser import parse_google_trends_rss
-from configutility import ConfigUtility
+from src.google_trends_parser import parse_google_trends_rss
+from src.configutility import ConfigUtility
 
 def store_in_mongodb(trends):
     """

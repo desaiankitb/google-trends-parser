@@ -1,7 +1,7 @@
 import requests
-from google_trends_parser import parse_google_trends_rss
-from google_trends_to_mongodb import store_in_mongodb
-from configutility import ConfigUtility
+from src.google_trends_parser import parse_google_trends_rss
+from src.google_trends_to_mongodb import store_in_mongodb
+from src.configutility import ConfigUtility
 
 class SlackNotifier:
     """
