@@ -3,6 +3,16 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 
 def parse_google_trends_rss(url):
+    """
+    Parses the Google Trends RSS feed and extracts trending data for today and yesterday.
+    
+    Args:
+        url (str): The URL of the Google Trends RSS feed.
+        
+    Returns:
+        list: A list of dictionaries containing trending data for each trend.
+    """
+    
     response = requests.get(url)
     root = ET.fromstring(response.content)
 
@@ -55,6 +65,9 @@ def parse_google_trends_rss(url):
     return trends
 
 if __name__ == "__main__":
+    """
+    Main execution point. Parses the Google Trends RSS feed and prints the trending data.
+    """
     url = "https://trends.google.com/trends/trendingsearches/daily/rss?geo=US"
     trends = parse_google_trends_rss(url)
     for trend in trends:
