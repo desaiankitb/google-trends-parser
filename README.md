@@ -1,6 +1,6 @@
-# Google Trends to MongoDB with Slack Notifications
+# Google Trends to MongoDB with Slack Notifications and FastAPI
 
-This project fetches daily trending searches from Google Trends, stores them in a MongoDB database, and sends notifications to a Slack channel regarding the status of the operation.
+This project fetches daily trending searches from Google Trends, stores them in a MongoDB database, and sends notifications to a Slack channel regarding the status of the operation. Additionally, it exposes an API endpoint using FastAPI to trigger the fetching process.
 
 ## Prerequisites
 
@@ -48,13 +48,13 @@ SLACK_WEBHOOK_URL=your_slack_webhook_url
 
 ## Usage
 
-Run the main script:
+To start the FastAPI server:
 
 ```bash
-python main.py
+uvicorn main:app --reload
 ```
 
-This will fetch the daily trending searches from Google Trends, store them in the MongoDB database, and send a notification to the configured Slack channel.
+Navigate to `http://127.0.0.1:8000/get_google_trends` in your browser or use a tool like `curl` to access the endpoint. This will fetch the Google trends, store them in MongoDB, and send a Slack notification.
 
 ## Modules
 
@@ -73,7 +73,7 @@ A utility class to send notifications to a Slack channel:
 - `__init__(self, webhook_url)`: Initializes the SlackNotifier with the provided webhook URL.
 - `send_message(self, message)`: Sends a message to the Slack channel associated with the webhook URL.
 
-## Notifications
+\## Notifications
 
 The application sends notifications to a Slack channel using the provided webhook URL. Notifications are sent when:
 
