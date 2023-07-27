@@ -1,49 +1,81 @@
-# Google Trends Daily Scraper
+# Google Trends to MongoDB with Slack Notifications
 
-This script fetches the daily trending searches from Google Trends for the current and previous day.
+This project fetches daily trending searches from Google Trends, stores them in a MongoDB database, and sends notifications to a Slack channel regarding the status of the operation.
 
 ## Prerequisites
 
 - Python 3.x
+- MongoDB server
+- Slack webhook URL for notifications
 
-## Setup
+## Installation
 
-1. **Clone this repository.**
-```   
-git clone https://github.com/desaiankitb/google-trends-parser.git
+1. Clone the repository:
+
+```bash
+git clone <repository_url>
 ```
 
-2. **Navigate to the repository's directory.**
-```
-cd <repository-directory>
+2. Navigate to the project directory:
+
+```bash
+cd google-trends-parser
 ```
 
-3. **Install the required packages.**
-```
+3. Install the required Python packages:
+
+```bash
 pip install -r requirements.txt
 ```
 
+## Configuration
+
+1. Update the `config.ini` file with the necessary MongoDB and Slack configurations:
+
+```
+[MONGODB]
+HOST=localhost
+PORT=27017
+USERNAME=your_mongodb_username
+PASSWORD=your_mongodb_password
+DB_NAME=ds_trends_db
+
+[SLACK]
+SLACK_WEBHOOK_URL=your_slack_webhook_url
+```
+
+2. Ensure MongoDB is running and the provided user has the necessary permissions.
+
 ## Usage
 
-Run the script using the following command:
+Run the main script:
+
+```bash
+python main.py
 ```
-python google_trends_scraper.py
-```
 
-This will print the trending searches for the current and previous day in the console.
+This will fetch the daily trending searches from Google Trends, store them in the MongoDB database, and send a notification to the configured Slack channel.
 
-## Output
+## Modules
 
-The script outputs a list of dictionaries. Each dictionary represents a trend and contains the following keys:
-- `title`: The title of the trend.
-- `ht:approx_traffic`: Approximate traffic for the trend.
-- `description`: Description of the trend.
-- `link`: Link to the trend on Google Trends.
-- `pubDate`: Publication date of the trend.
-- `ht:picture`: Link to the picture associated with the trend.
-- `ht:picture_source`: Source of the picture.
-- `news_items`: A list of news items associated with the trend. Each news item is a dictionary containing the title, snippet, URL, and source.
+### `src/google_trends_parser.py`
 
-## License
+This module contains the `parse_google_trends_rss` function that fetches and parses the Google Trends RSS feed for daily trending searches.
 
-This project is open source and available under the [MIT License](LICENSE).
+### `store_in_mongodb`
+
+This function connects to the MongoDB server using the provided configuration, selects the appropriate database and collection, and inserts the parsed trending searches.
+
+### `SlackNotifier`
+
+A utility class to send notifications to a Slack channel:
+
+- `__init__(self, webhook_url)`: Initializes the SlackNotifier with the provided webhook URL.
+- `send_message(self, message)`: Sends a message to the Slack channel associated with the webhook URL.
+
+## Notifications
+
+The application sends notifications to a Slack channel using the provided webhook URL. Notifications are sent when:
+
+- The trending searches are successfully stored in MongoDB.
+- An error occurs during the operation.
