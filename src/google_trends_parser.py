@@ -1,6 +1,10 @@
 import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
+from src.logging_config import LoggerConfig
+
+# Initialize the logger
+logger = LoggerConfig().logger
 
 def parse_google_trends_rss(url):
     """
@@ -13,8 +17,14 @@ def parse_google_trends_rss(url):
         list: A list of dictionaries containing trending data for each trend.
     """
     
-    response = requests.get(url)
-    root = ET.fromstring(response.content)
+    logger.info("Fetching Google Trends RSS from URL: %s", url)
+    
+    try:
+        response = requests.get(url)
+        root = ET.fromstring(response.content)
+    except Exception as e:
+        logger.error("Error fetching or parsing the RSS feed: %s", str(e))
+        return []
 
     # Define the namespace
     ns = {'ht': 'https://trends.google.com/trends/trendingsearches/daily'}
@@ -62,6 +72,7 @@ def parse_google_trends_rss(url):
 
             trends.append(trend_data)
 
+    logger.info("Parsed %d trends from the RSS feed", len(trends))
     return trends
 
 if __name__ == "__main__":
