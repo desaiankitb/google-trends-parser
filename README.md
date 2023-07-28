@@ -1,6 +1,6 @@
-# Google Trends to MongoDB with Slack Notifications and FastAPI
+# Google Trends to MongoDB with Slack Notifications, Logging, and FastAPI
 
-This project fetches daily trending searches from Google Trends, stores them in a MongoDB database, and sends notifications to a Slack channel regarding the status of the operation. Additionally, it exposes an API endpoint using FastAPI to trigger the fetching process.
+This project fetches daily trending searches from Google Trends, stores them in a MongoDB database, sends notifications to a Slack channel regarding the status of the operation, and logs important events and errors. Additionally, it exposes an API endpoint using FastAPI to trigger the fetching process.
 
 ## Prerequisites
 
@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ## Configuration
 
-1. Update the `config.ini` file with the necessary MongoDB and Slack configurations:
+1. Update the `config.ini` file with the necessary MongoDB, Slack, and logging configurations:
 
 ```
 [MONGODB]
@@ -54,7 +54,7 @@ To start the FastAPI server:
 uvicorn main:app --reload
 ```
 
-Navigate to `http://127.0.0.1:8000/get_google_trends` in your browser or use a tool like `curl` to access the endpoint. This will fetch the Google trends, store them in MongoDB, and send a Slack notification.
+Navigate to `http://127.0.0.1:8000/get_google_trends` in your browser or use a tool like `curl` to access the endpoint. This will fetch the Google trends, store them in MongoDB, send a Slack notification, and log the operations.
 
 ## Modules
 
@@ -73,9 +73,20 @@ A utility class to send notifications to a Slack channel:
 - `__init__(self, webhook_url)`: Initializes the SlackNotifier with the provided webhook URL.
 - `send_message(self, message)`: Sends a message to the Slack channel associated with the webhook URL.
 
-\## Notifications
+### `LoggerConfig`
+
+A utility class to configure and manage application logging:
+
+- Provides logging setup with different log levels.
+- Logs are printed to the console for real-time monitoring.
+
+## Notifications
 
 The application sends notifications to a Slack channel using the provided webhook URL. Notifications are sent when:
 
 - The trending searches are successfully stored in MongoDB.
 - An error occurs during the operation.
+
+## Logging
+
+The application logs important events, such as successful operations and errors, to assist in monitoring and debugging. The logs are printed to the console and can be redirected to a file or other logging systems as needed.
